@@ -16,7 +16,7 @@ const BottomMenu = () => {
   };
 
   const handleNavigateToProfile = () => {
-    navigation.navigate('Profile');
+    navigation.navigate('ProfilePage');
   };
 
   const isFavoriteActive = route.name === 'FavoritesPage';

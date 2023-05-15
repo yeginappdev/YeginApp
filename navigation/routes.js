@@ -8,7 +8,7 @@ import RegisterF from '../pages/RegisterF';
 import RegisterT from '../pages/RegisterT';
 import MainPage from '../pages/MainPage';
 import FavoritesPage from '../pages/FavoritesPage';
-import Profile from '../pages/Profile';
+import ProfilePage from '../pages/ProfilePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +17,7 @@ const Routes = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Mainpage" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Mainpage" screenOptions={{ animation: 'none', headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomePage} />
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="Registerf" component={RegisterF} />
@@ -32,7 +32,7 @@ const Routes = () => {
             <FavoritesPage {...props} favoriteCards={favoriteCards} setFavoriteCards={setFavoriteCards} />
           )}
         </Stack.Screen>
-        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="ProfilePage" component={ProfilePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -39,21 +39,11 @@ const BottomSheet = ({ isVisible, onClose }) => {
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Ionicons name="close" size={24} color="#000" />
         </TouchableOpacity>
-        
+        <Text style={[styles.title, { marginTop: 16 }]}>Город</Text>
+        <CityDropdown />
         <ScrollView>
         <View style={styles.content}>
-          <Text style={[styles.title, { marginTop: 16 }]}>Город</Text>
-          <CityDropdown />
-
-          <Text style={styles.title}>Область</Text>
-          <TouchableOpacity
-            style={styles.dropdown}
-            onPress={() => handleDropdownChange('Option 2')}
-          >
-            <Text style={styles.dropdownText}>{selectedOption || 'Выберите область'}</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.title}>Комфорт</Text>
+          <Text style={[styles.title, { marginTop: 10 }]}>Комфорт</Text>
           <View style={styles.checkboxContainer}>
             <TouchableOpacity
               style={styles.checkbox}

@@ -77,7 +77,7 @@ const MainPage = () => {
           <TouchableOpacity onPress={openBottomSheet} style={{ backgroundColor:'#7FE3A7', 
                                                                         borderRadius: 50,
                                                                         alignItems: 'center',
-                                                                        padding:'3%'}}>
+                                                                        padding:'2%'}}>
         <Text style={{ fontSize:12}}>ФИЛЬТРЫ</Text>
       </TouchableOpacity>
       <BottomSheet isVisible={isBottomSheetVisible} onClose={closeBottomSheet} />
