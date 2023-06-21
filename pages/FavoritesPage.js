@@ -1,61 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../redux/actions/favoriteActions';
+
 
 import ProductCard from '../components/ProductCard';
 import BottomMenu from '../components/BottomMenu';
 import GoBackButton from '../components/GoBack';
 
 const FavoritesPage = () => {
-  const [favoriteCards, setFavoriteCards] = useState([]);
+  const dispatch = useDispatch();
+  const favoriteProducts = useSelector((state) => state.favorites);
 
-  const handleRemoveFavorite = async (product) => {
-    const updatedFavoriteCards = favoriteCards.filter((card) => card.id !== product.id);
-
-    try {
-      await AsyncStorage.setItem('favoriteProducts', JSON.stringify(updatedFavoriteCards));
-      setFavoriteCards(updatedFavoriteCards);
-    } catch (error) {
-      console.log('Error removing favorite product:', error);
-    }
+  const handleRemoveFavorite = (product) => {
+    dispatch(removeFromFavorites(product));
   };
-
-  useEffect(() => {
-    // Retrieve the favorite products from AsyncStorage
-    const getFavoriteProducts = async () => {
-      try {
-        const storedFavoriteProducts = await AsyncStorage.getItem('favoriteProducts');
-        if (storedFavoriteProducts) {
-          setFavoriteCards(JSON.parse(storedFavoriteProducts));
-        }
-      } catch (error) {
-        console.log('Error retrieving favorite products:', error);
-      }
-    };
-
-    getFavoriteProducts();
-  }, []);
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <GoBackButton />
-    <View style={styles.container}>
-    <Text style={styles.favTitle}>Избранные объявления:</Text>
-    <ScrollView>
       <View style={styles.container}>
-        {favoriteCards.map((product) => (
-          <View style={styles.containerCard} key={product.id}>
-            <ProductCard
-              product={product}
-              isFavorite={true}
-              onPressRemove={() => handleRemoveFavorite(product)}
-            />
+        <Text style={styles.favTitle}>Избранные объявления:</Text>
+        <ScrollView>
+          <View style={styles.container}>
+            {favoriteProducts.map((product) => (
+              <View style={styles.containerCard} key={product.id}>
+                <ProductCard
+                  product={product}
+                  isFavorite={true}
+                  onPressRemove={() => handleRemoveFavorite(product)}
+                />
+              </View>
+            ))}
           </View>
-        ))}
+        </ScrollView>
       </View>
-    </ScrollView>
-    </View>
-    <BottomMenu />
+      <BottomMenu />
     </KeyboardAvoidingView>
   );
 };

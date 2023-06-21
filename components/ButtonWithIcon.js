@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop:1,
-    marginBottom:'20%',
   },
   text: {
     fontSize: 12,
