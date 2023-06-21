@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ProductCard from '../components/ProductCard';
 import BottomMenu from '../components/BottomMenu';
+import GoBackButton from '../components/GoBack';
 
 const FavoritesPage = () => {
   const [favoriteCards, setFavoriteCards] = useState([]);
@@ -37,18 +38,19 @@ const FavoritesPage = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <GoBackButton />
     <View style={styles.container}>
     <Text style={styles.favTitle}>Избранные объявления:</Text>
     <ScrollView>
       <View style={styles.container}>
-        {favoriteCards && favoriteCards.map((product) => (
-          <ProductCard
-            style={styles.containerCard}
-            product={product}
-            isFavorite={true}
-            onPressRemove={() => handleRemoveFavorite(product)}
-            key={product.id}
-          />
+        {favoriteCards.map((product) => (
+          <View style={styles.containerCard} key={product.id}>
+            <ProductCard
+              product={product}
+              isFavorite={true}
+              onPressRemove={() => handleRemoveFavorite(product)}
+            />
+          </View>
         ))}
       </View>
     </ScrollView>
@@ -62,12 +64,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: '10%',
     justifyContent: 'flex-end',
   },
   favTitle: {
     paddingLeft: '5%',
+    paddingTop: '5%',
+    paddingBottom: '5%',
     fontSize: 20,
+
   },
   containerCard: {
     marginBottom: '3%',
