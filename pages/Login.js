@@ -1,35 +1,38 @@
-import { StyleSheet, View, Text, ScrollView , KeyboardAvoidingView} from "react-native";
+import { StyleSheet, View, Text, ScrollView , KeyboardAvoidingView } from "react-native";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import React, { useEffect } from 'react';
 
+// Import custom components
 import LoginForm from "../components/LoginForm";
 import GoBackButton from "../components/GoBack";
 import ImgHolder from "../components/LogImageHolder";
+// Import assets
+const WelcomeBackImage = require("../assets/img/friends.png");
 
-const FriendsImg = require("../assets/img/friends.png");
-
+// Component definition
 const LoginPage = () => {
+  // Lock screen to portrait mode on component mount
   useEffect(() => {
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP); // lock the screen to portrait mode by default
-
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    // Unlock the screen orientation when the component is unmounted
     return () => {
-      ScreenOrientation.unlockAsync(); // unlock the screen orientation when the component is unmounted
+      ScreenOrientation.unlockAsync(); 
     };
   }, []);
+
+  // Render component
   return(
     <KeyboardAvoidingView style={styles.container}>
-    <ScrollView>
-    <View style={styles.container}>
-      <GoBackButton />
-
-      <View style={styles.loginButtonContainer}>
-                <Text style={styles.textBefore}>Мы рады видеть Вас снова!</Text>
-                <ImgHolder image={FriendsImg} />
-      </View>
-
-      <LoginForm />
-    </View>
-    </ScrollView>
+      <ScrollView>
+        <View style={styles.container}>
+          <GoBackButton />
+          <View style={styles.loginButtonContainer}>
+            <Text style={styles.textBefore}>Мы рады видеть Вас снова!</Text>
+            <ImgHolder image={WelcomeBackImage} />
+          </View>
+          <LoginForm />
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

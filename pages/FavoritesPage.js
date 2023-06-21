@@ -5,9 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProductCard from '../components/ProductCard';
 import BottomMenu from '../components/BottomMenu';
 
-
 const FavoritesPage = () => {
-  const [favoriteCards, setFavoriteProducts] = useState([]);
+  const [favoriteCards, setFavoriteCards] = useState([]);
 
   const handleRemoveFavorite = async (product) => {
     const updatedFavoriteCards = favoriteCards.filter((card) => card.id !== product.id);
@@ -26,7 +25,7 @@ const FavoritesPage = () => {
       try {
         const storedFavoriteProducts = await AsyncStorage.getItem('favoriteProducts');
         if (storedFavoriteProducts) {
-          setFavoriteProducts(JSON.parse(storedFavoriteProducts));
+          setFavoriteCards(JSON.parse(storedFavoriteProducts));
         }
       } catch (error) {
         console.log('Error retrieving favorite products:', error);
@@ -42,14 +41,14 @@ const FavoritesPage = () => {
     <Text style={styles.favTitle}>Избранные объявления:</Text>
     <ScrollView>
       <View style={styles.container}>
-        {favoriteCards.map((product) => (
-          <View style={styles.containerCard} key={product.id}>
-            <ProductCard
-              product={product}
-              isFavorite={true}
-              onPressRemove={() => handleRemoveFavorite(product)}
-            />
-          </View>
+        {favoriteCards && favoriteCards.map((product) => (
+          <ProductCard
+            style={styles.containerCard}
+            product={product}
+            isFavorite={true}
+            onPressRemove={() => handleRemoveFavorite(product)}
+            key={product.id}
+          />
         ))}
       </View>
     </ScrollView>

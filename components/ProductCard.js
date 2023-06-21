@@ -1,14 +1,19 @@
 import React from 'react';
 import { StyleSheet, View, Pressable, Text, Image } from 'react-native';
 
-const ProductCard = ({ product, isFavorite, onPressFavorite, onPressRemove }) => {
+const ProductCard = ({
+  product,
+  isFavorite,
+  onPressFavorite = () => {},
+  onPressRemove = () => {},
+}) => {
   const { id, name, date, image } = product;
 
   const handlePress = () => {
     if (isFavorite) {
-      onPressRemove(product);
+      onPressRemove && onPressRemove(product);
     } else {
-      onPressFavorite(product);
+      onPressFavorite && onPressFavorite(product);
     }
   };
 
