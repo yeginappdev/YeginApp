@@ -19,7 +19,7 @@ const ButtonWithIcon = ({ icon, text, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
   },
   button: {
     width: 80,
@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     height: 50,
   },
   textContainer: {
-    marginTop: 6,
+    marginTop:1,
+    marginBottom:'20%',
   },
   text: {
     fontSize: 12,
