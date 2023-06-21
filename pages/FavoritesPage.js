@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToFavorites, removeFromFavorites } from '../redux/actions/favoriteActions';
-
+import { removeFromFavorites } from '../redux/actions/favoriteActions';
 
 import ProductCard from '../components/ProductCard';
 import BottomMenu from '../components/BottomMenu';
@@ -10,7 +9,7 @@ import GoBackButton from '../components/GoBack';
 
 const FavoritesPage = () => {
   const dispatch = useDispatch();
-  const favoriteProducts = useSelector((state) => state.favorites);
+  const favoriteProducts = useSelector((state) => state.favorite.favorites);
 
   const handleRemoveFavorite = (product) => {
     dispatch(removeFromFavorites(product));
@@ -28,7 +27,7 @@ const FavoritesPage = () => {
                 <ProductCard
                   product={product}
                   isFavorite={true}
-                  onPressRemove={() => handleRemoveFavorite(product)}
+                  onPressFavorite={() => handleRemoveFavorite(product)}
                 />
               </View>
             ))}

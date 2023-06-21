@@ -12,9 +12,11 @@ import BottomSheet from '../components/Filters';
 import productsData from '../data/productsData';
 
 const MainPage = () => {
-  const dispatch = useDispatch();
-  const favoriteProducts = useSelector((state) => state.favorite.products); // Adjust this according to your state
+    const dispatch = useDispatch();
+    const favoriteProducts = useSelector((state) => state.favorite.favorites);  // Adjust this according to your state
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState(false);
+
+  
 
   useEffect(() => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
@@ -58,16 +60,16 @@ const MainPage = () => {
       </View>
       <BottomSheet isVisible={isBottomSheetVisible} onClose={closeBottomSheet} />
       <ScrollView>
-        {productsData.map((product) => (
-          <View style={styles.cardContainer} key={product.id}>
-            <ProductCard
-              product={product}
-              isFavorite={favoriteProducts.some((favProduct) => favProduct.id === product.id)}
-              onPressFavorite={() => handlePressFavorite(product)}
-            />
-          </View>
-        ))}
-      </ScrollView>
+      {productsData.map((product) => (
+        <View style={styles.cardContainer} key={product.id}>
+          <ProductCard
+            product={product}
+            isFavorite={favoriteProducts.some((favProduct) => favProduct.id === product.id)}
+            onPressFavorite={() => handlePressFavorite(product)}
+          />
+        </View>
+      ))}
+    </ScrollView>
       <BottomMenu />
     </KeyboardAvoidingView>
   );

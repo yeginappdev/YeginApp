@@ -1,24 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, Pressable, Text, Image } from 'react-native';
-import { connect } from 'react-redux';
-import { removeFromFavorites, addToFavorites } from '../redux/actions/favoriteActions';
 
 const ProductCard = ({
   product,
-  favorites,
-  addToFavorites,
-  removeFromFavorites,
+  isFavorite,
+  onPressFavorite
 }) => {
   const { id, name, date, image } = product;
 
-  const isFavorite = favorites.some(favorite => favorite.id === id);
-  
   const handlePress = () => {
-    if (isFavorite) {
-      removeFromFavorites(product);
-    } else {
-      addToFavorites(product);
-    }
+    onPressFavorite();
   };
 
   return (
@@ -83,8 +74,9 @@ const styles = StyleSheet.create({
 
 // This function is used to access data from the store
 const mapStateToProps = (state) => ({
-  favorites: state.favorites,
+  favorites: state.favorite.favorites,
 });
+
 
 // This function is used to dispatch actions to the store
 const mapDispatchToProps = (dispatch) => ({
@@ -93,4 +85,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductCard);
+export default ProductCard;

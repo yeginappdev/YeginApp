@@ -1,8 +1,6 @@
-import { combineReducers } from 'redux';
-import favoritesReducer from './favoritesReducer';
+import { combineReducers } from "redux";
+import favoriteReducer from './favoritesReducer';
 
-const rootReducer = combineReducers({
-  favorites: favoritesReducer,
+export default combineReducers({
+  favorite: favoriteReducer
 });
-
-export default rootReducer;
