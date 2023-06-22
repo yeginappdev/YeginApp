@@ -1,5 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native';
+import { auth } from '../utils/firebaseConfig';
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+const handleRegister = (email, password) => {
+  createUserWithEmailAndPassword(auth, email, password)
+.then((userCredential) => {
+  // Signed in 
+  const user = userCredential.user;
+  // ...
+})
+.catch((error) => {
+  const errorCode = error.code;
+  const errorMessage = error.message;
+  // ..
+});
+};
+
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
@@ -9,10 +27,6 @@ const RegisterForm = () => {
   const [passwordError, setPasswordError] = useState('');
   const [passwordRepeatError, setPasswordRepeatError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleRegister = () => {
-    // handle registration logic here
-  };
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -104,7 +118,7 @@ const RegisterForm = () => {
 
       <TouchableOpacity
         style={[styles.button, !formIsValid && styles.buttonDisabled]}
-        onPress={handleRegister}
+        onPress={handleRegister(email, password)}
         disabled={!formIsValid}
       >
         <Text style={styles.buttonText}>Зарегистрироваться</Text>

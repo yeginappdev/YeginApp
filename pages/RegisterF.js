@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image, ScrollView , KeyboardAvoidingView, Keyboard, Platform} from "react-native";
+import { StyleSheet, View, Text, Image, ScrollView , KeyboardAvoidingView, Keyboard} from "react-native";
 import RegisterForm from "../components/RegisterForm";
 import GoBackButton from "../components/GoBack";
 import ImgHolder from "../components/LogImageHolder";
