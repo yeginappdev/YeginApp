@@ -1,16 +1,22 @@
 import React from 'react';
 import { StyleSheet, View, Pressable, Text, Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../redux/actions/favoriteActions';
 
-const ProductCard = ({
-  product,
-  isFavorite,
-  onPressFavorite
-}) => {
-  const { id, name, date, image } = product;
+const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+  const favoriteProducts = useSelector(state => state.favorite.favorites);
+  const isFavorite = favoriteProducts.some(favProduct => favProduct.id === product.id);
 
   const handlePress = () => {
-    onPressFavorite();
+    if (isFavorite) {
+      dispatch(removeFromFavorites(product));
+    } else {
+      dispatch(addToFavorites(product));
+    }
   };
+
+  const { id, name, date, image } = product;
 
   return (
     <View style={styles.containerListItem}>
@@ -40,11 +46,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   containerFavorites: {
-  position:'absolute',
-  flexDirection: 'row',
+    position:'absolute',
+    flexDirection: 'row',
     width: 164,
     height:150,
-   marginLeft: 125,
+    marginLeft: 125,
     marginTop: 10,
   },
   imageItem: {
@@ -71,18 +77,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-// This function is used to access data from the store
-const mapStateToProps = (state) => ({
-  favorites: state.favorite.favorites,
-});
-
-
-// This function is used to dispatch actions to the store
-const mapDispatchToProps = (dispatch) => ({
-  addToFavorites: (product) => dispatch(addToFavorites(product)),
-  removeFromFavorites: (product) => dispatch(removeFromFavorites(product)),
-});
-
 
 export default ProductCard;
