@@ -17,7 +17,7 @@ const Routes = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Mainpage" screenOptions={{ animation: 'none', headerShown: false }}>
+      <Stack.Navigator initialRouteName="Welcome" screenOptions={{ animation: 'none', headerShown: false }}>
         <Stack.Screen name="Welcome" component={WelcomePage} />
         <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen name="Registerf" component={RegisterF} />

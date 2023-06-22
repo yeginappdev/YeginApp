@@ -103,9 +103,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     marginBottom: 10,
-    placeholderTextColor:"#000",
     fontSize: 17,
-  },
+},
   inputError: {
     borderColor: 'red',
   },
@@ -131,8 +130,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize:'20em',
-  },
+    fontSize: 20,
+},
 });
 
 export default LoginForm;
