@@ -1,25 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard } from 'react-native';
+import { Alert, Modal, Pressable, View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard, ActivityIndicator } from 'react-native';
 import { auth } from '../utils/firebaseConfig';
-
+import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const handleRegister = (email, password) => {
-  createUserWithEmailAndPassword(auth, email, password)
-.then((userCredential) => {
-  // Signed in 
-  const user = userCredential.user;
-  // ...
-})
-.catch((error) => {
-  const errorCode = error.code;
-  const errorMessage = error.message;
-  // ..
-});
-};
-
-
 const RegisterForm = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordRepeat, setPasswordRepeat] = useState('');
@@ -27,7 +13,26 @@ const RegisterForm = () => {
   const [passwordError, setPasswordError] = useState('');
   const [passwordRepeatError, setPasswordRepeatError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // New state variable
+  const [modalVisible, setModalVisible] = useState(false);
 
+  const handleRegister = (email, password) => {
+    setIsLoading(true); // Start loading
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        setIsLoading(false); // Stop loading
+        setModalVisible(true); // Show modal after successful registration
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setIsLoading(false); // Stop loading
+        // handle error here
+      });
+  };
+  
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -63,6 +68,12 @@ const RegisterForm = () => {
 
   return (
     <View style={styles.container}>
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
+  
       <TextInput
         style={[styles.input, emailError && styles.inputError]}
         placeholder="E-mail"
@@ -77,6 +88,7 @@ const RegisterForm = () => {
         autoCapitalize="none"
       />
       {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+  
       <TextInput
         style={[styles.input, passwordError && styles.inputError]}
         placeholder="Пароль"
@@ -93,6 +105,7 @@ const RegisterForm = () => {
       {passwordError ? (
         <Text style={styles.errorText}>{passwordError}</Text>
       ) : null}
+  
       <TextInput
         style={[styles.input, passwordRepeatError && styles.inputError]}
         placeholder="Повторите пароль"
@@ -109,22 +122,23 @@ const RegisterForm = () => {
       {passwordRepeatError ? (
         <Text style={styles.errorText}>{passwordRepeatError}</Text>
       ) : null}
-
-    <View style={styles.checkboxContainer}>
+  
+      <View style={styles.checkboxContainer}>
         <TouchableOpacity onPress={handleShowPassword}>
           <Text>Показать пароль</Text>
         </TouchableOpacity>
       </View>
-
+  
       <TouchableOpacity
         style={[styles.button, !formIsValid && styles.buttonDisabled]}
-        onPress={handleRegister(email, password)}
+        onPress={() => handleRegister(email, password)} // HandleRegister call wrapped in arrow function
         disabled={!formIsValid}
       >
         <Text style={styles.buttonText}>Зарегистрироваться</Text>
       </TouchableOpacity>
     </View>
   );
+  
 };
 
 const styles = StyleSheet.create({
@@ -175,6 +189,17 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize:20,
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
   },
 });
 
